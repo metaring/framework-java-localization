@@ -66,6 +66,34 @@ public class LocaleInfo implements GeneratedCoreType {
         return localeInfo;
     }
 
+    public static LocaleInfo fromObject(Object object) {
+
+        if(object == null) {
+            return null;
+        }
+
+        DataRepresentation dataRepresentation = Tools.FACTORY_DATA_REPRESENTATION.fromObject(object);
+
+        LocaleEnumerator locale = null;
+        if(dataRepresentation.hasProperty("locale")) {
+            try {
+                locale = dataRepresentation.get("locale", LocaleEnumerator.class);
+            } catch (Exception e) {
+            }
+        }
+
+        String currency = null;
+        if(dataRepresentation.hasProperty("currency")) {
+            try {
+                currency = dataRepresentation.getText("currency");
+            } catch (Exception e) {
+            }
+        }
+
+        LocaleInfo localeInfo = create(locale, currency);
+        return localeInfo;
+    }
+
     public DataRepresentation toDataRepresentation() {
         DataRepresentation dataRepresentation = Tools.FACTORY_DATA_REPRESENTATION.create();
         if (locale != null) {
